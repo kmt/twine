@@ -14,6 +14,7 @@
 from __future__ import absolute_import, division, print_function
 from __future__ import unicode_literals
 
+import os
 import os.path
 import functools
 import getpass
@@ -31,7 +32,7 @@ else:
     input_func = raw_input
 
 
-DEFAULT_REPOSITORY = "https://pypi.python.org/pypi"
+DEFAULT_REPOSITORY = os.getenv("PYPI_REPOSITORY", "https://pypi.python.org/pypi")
 
 
 def get_config(path="~/.pypirc"):
