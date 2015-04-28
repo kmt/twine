@@ -23,7 +23,7 @@ __title__ = "twine"
 __summary__ = "Collection of utilities for interacting with PyPI"
 __uri__ = "https://github.com/pypa/twine"
 
-__version__ = "1.5.0+ncbi"
+__version__ = "1.5.0+ncbi.1"
 
 __author__ = "Donald Stufft and individual contributors"
 __email__ = "donald@stufft.io"
