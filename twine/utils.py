@@ -21,6 +21,11 @@ import getpass
 import sys
 
 try:
+    from urlparse import urlparse, urlunparse
+except ImportError:
+    from urllib.parse import urlparse, urlunparse
+
+try:
     import configparser
 except ImportError:  # pragma: no cover
     import ConfigParser as configparser
@@ -40,11 +45,15 @@ def get_config(path="~/.pypirc"):
     path = os.path.expanduser(path)
 
     if not os.path.isfile(path):
-        return {"pypi": {"repository": DEFAULT_REPOSITORY,
-                         "username": None,
-                         "password": None
-                         }
-                }
+        parsed = urlparse(DEFAULT_REPOSITORY)
+        return {
+            "pypi": {
+                "repository": urlunparse(
+                    (parsed[0], parsed.hostname) + parsed[2:]),
+                "username": parsed.username,
+                "password": parsed.password
+            }
+        }
 
     # Parse the rc file
     parser = configparser.ConfigParser()
