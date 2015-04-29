@@ -46,10 +46,16 @@ def get_config(path="~/.pypirc"):
 
     if not os.path.isfile(path):
         parsed = urlparse(DEFAULT_REPOSITORY)
+
+        # Extract username and password out of netloc
+        netloc = parsed.hostname
+        if parsed.port:
+            netloc += ':{}'.format(parsed.port)
+        repository = urlunparse((parsed[0], netloc) + parsed[2:])
+
         return {
             "pypi": {
-                "repository": urlunparse(
-                    (parsed[0], parsed.hostname) + parsed[2:]),
+                "repository": repository,
                 "username": parsed.username,
                 "password": parsed.password
             }
